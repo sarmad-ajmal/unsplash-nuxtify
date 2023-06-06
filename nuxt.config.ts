@@ -2,10 +2,12 @@
 export default defineNuxtConfig({
   app: {
     head: {
+      title: "Beautiful Free Images & Pictures | Unsplash",
       link: [
         {
-          href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap",
-          rel: "stylesheet",
+          rel: "icon",
+          type: "image/x-icon",
+          href: "/images/unsplash-logo.svg",
         },
       ],
     },
