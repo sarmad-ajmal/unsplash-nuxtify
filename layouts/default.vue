@@ -40,8 +40,8 @@ const res = await useFetch(
 const { urls } = res.data.value || {};
 const { regular } = urls || {};
 headerPhoto.value = regular;
-userName.value = res.data.value.user.first_name;
-userProfileLink.value = res.data.value.user.portfolio_url;
+userName.value = res.data.value?.user?.first_name;
+userProfileLink.value = res.data.value?.user?.portfolio_url;
 </script>
 <template>
   <v-app>
@@ -101,8 +101,9 @@ userProfileLink.value = res.data.value.user.portfolio_url;
             <template v-for="tab in categoriesTabs" :key="tab?.id">
               <v-tab
                 value="one"
-                style="text-transform: capitalize"
+                style="text-transform: capitalize; color: #767676"
                 :href="tab.href"
+                class="text-body-2"
                 >{{ tab.name }}</v-tab
               >
             </template>
@@ -208,6 +209,7 @@ userProfileLink.value = res.data.value.user.portfolio_url;
   text-align: left;
   width: max(55%, 500px);
   color: white;
+  z-index: 1;
 }
 .hero-search h1 {
   font-size: 3rem;
@@ -218,5 +220,17 @@ userProfileLink.value = res.data.value.user.portfolio_url;
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0;
+}
+
+.unsplash-hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.17);
+  z-index: 0;
+  pointer-events: none;
 }
 </style>

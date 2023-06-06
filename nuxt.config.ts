@@ -1,6 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css: ["vuetify/lib/styles/main.sass"],
+  app: {
+    head: {
+      link: [
+        {
+          href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap",
+          rel: "stylesheet",
+        },
+      ],
+    },
+  },
+  css: ["vuetify/lib/styles/main.sass", "/assets/main.scss"],
   build: {
     transpile: ["vuetify"],
   },
