@@ -42,7 +42,7 @@ const props = defineProps<{
               <span class="text-body-2 text-white">{{
                 first_name + "" + last_name
               }}</span>
-              <span class="text-caption text-grey hire-me"
+              <span class="text-caption text-grey-lighten-1 hire-me"
                 >Available for hire</span
               >
             </div>
@@ -73,6 +73,7 @@ const props = defineProps<{
   width: 100%;
   height: auto;
   display: block;
+  cursor: zoom-in;
 }
 .image-tile:hover .hover-content {
   display: flex;

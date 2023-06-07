@@ -28,4 +28,5 @@ export default defineNuxtConfig({
       unsplashBaseUrl: "https://api.unsplash.com/",
     },
   },
+  debug: true,
 });
