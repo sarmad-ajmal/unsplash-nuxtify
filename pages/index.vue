@@ -5,6 +5,7 @@ const layout = "default";
 const config = useRuntimeConfig();
 const photos = ref([]);
 const currentPage = ref(1);
+const currentPageHeight = ref(null);
 
 const { unsplashAccessKey = "4SboObFgLiPLIhCr9dRkYA7FRmDicJbQhi6imu6LnbU" } =
   config || {};
@@ -13,26 +14,23 @@ const res = await useFetch(
   `${unsplashBaseUrl}/photos?client_id=${unsplashAccessKey}&per_page=30`
 );
 photos.value = res.data._rawValue;
-// const midOfPage = computed(() => {
-//   if (document && document.body) {
-//     return document.body.clientHeight / 2;
-//   }
-// });
-// console.log("midOfPage:", midOfPage.value);
 
 const load = async () => {
   const res = await $fetch(
     `${unsplashBaseUrl}/photos?client_id=${unsplashAccessKey}&per_page=30&page=${currentPage.value++}`
   );
-  console.log("load:", currentPage.value);
   photos.value = [...photos.value, ...res];
 };
-// console.log(process.client, process.browser);
+
+onMounted(() => {
+  currentPageHeight.value = window.innerHeight;
+});
 </script>
 <template>
   <NuxtLayout :name="layout">
     <div class="unsplash-masonry mt-13 px-16">
       <client-only>
+        <div>{{ currentPageHeight }}</div>
         <template v-for="image in photos" :key="image.id">
           <common-image-tile
             :image-url="image.urls.regular"
@@ -47,7 +45,11 @@ const load = async () => {
             "
           />
         </template>
-        <InfiniteLoading distance="500" firstload="{false}" @infinite="load" />
+        <InfiniteLoading
+          :distance="currentPageHeight / 2"
+          :firstload="false"
+          @infinite="load"
+        />
       </client-only>
     </div>
   </NuxtLayout>
