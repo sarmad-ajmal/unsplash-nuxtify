@@ -1,3 +1,3 @@
 <template>
-  <image-gallery />
+  <image-gallery query="" />
 </template>

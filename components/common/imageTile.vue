@@ -10,8 +10,8 @@ const props = defineProps<{
 </script>
 <template>
   <div class="image-tile position-relative">
-    <v-hover v-slot="{ isHovering, props }">
-      <img :src="imageUrl" style="" alt="" v-bind="props" />
+    <v-hover v-slot="{ isHovering, props: hoverProps }">
+      <img :src="imageUrl" style="" alt="" v-bind="hoverProps" />
       <div
         class="hover-content position-absolute h-100 w-100 flex-column justify-space-between"
       >
@@ -71,10 +71,7 @@ const props = defineProps<{
   width: 100%;
   height: auto;
   margin: 0 0 1em;
-  display: inline-block;
   box-sizing: border-box;
-  width: 100%;
-  height: auto;
   display: block;
 }
 .image-tile:hover .hover-content {

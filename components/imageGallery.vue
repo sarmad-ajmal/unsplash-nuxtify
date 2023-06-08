@@ -1,23 +1,49 @@
-<script setup>
+<script setup lang="ts">
 import InfiniteLoading from "v3-infinite-loading";
+import queryString from "query-string";
+import { _AsyncData } from "nuxt/dist/app/composables/asyncData";
+import { FetchError } from "ofetch";
 
+const props = defineProps<{
+  query: string;
+}>();
 const config = useRuntimeConfig();
-const photos = ref([]);
+const photos = ref<IUnsplashPhoto[]>([]);
 const router = useRouter();
 const currentPage = ref(1);
-const currentPageHeight = ref(null);
+const currentPageHeight = ref(300);
 
 const { unsplashAccessKey = "4SboObFgLiPLIhCr9dRkYA7FRmDicJbQhi6imu6LnbU" } =
   config || {};
 const { unsplashBaseUrl = "" } = config.public || {};
-const res = await useFetch(
-  `${unsplashBaseUrl}/search/photos?client_id=${unsplashAccessKey}&per_page=30&query=nuxt`
-);
-photos.value = res.data._rawValue;
+
+const computedUrl = computed(() => {
+  const params = queryString.stringify({
+    client_id: unsplashAccessKey,
+    per_page: 30,
+    query: props.query,
+  });
+  if (props.query) {
+    return `${unsplashBaseUrl}/search/photos?${params}`;
+  }
+  return `${unsplashBaseUrl}/photos?${params}`;
+});
+const parseResults = (
+  res: _AsyncData<IUnsplashPhoto[] | null, FetchError<any> | null>
+) => {
+  debugger;
+  if (props.query) {
+    // @ts-ignore
+    return res.data.value.results as unknown as IUnsplashPhoto[];
+  }
+  return res.data.value as IUnsplashPhoto[];
+};
+const res = await useFetch<IUnsplashPhoto[]>(computedUrl.value);
+photos.value = parseResults(res);
+
 const load = async () => {
-  const res = await $fetch(
-    `${unsplashBaseUrl}/search/photos?client_id=${unsplashAccessKey}&query=nuxt&per_page=30&page=${currentPage.value++}`
-  );
+  currentPage.value += 1;
+  const res: IUnsplashPhoto[] = await $fetch(computedUrl.value);
   photos.value = [...photos.value, ...res];
 };
 
