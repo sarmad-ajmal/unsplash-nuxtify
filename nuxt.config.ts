@@ -12,15 +12,20 @@ export default defineNuxtConfig({
       ],
     },
   },
+  pages: true,
+
   css: ["vuetify/lib/styles/main.sass", "/assets/main.scss"],
+
   build: {
     transpile: ["vuetify"],
   },
+
   vite: {
     define: {
       "process.env.DEBUG": false,
     },
   },
+
   runtimeConfig: {
     unsplashAccessKey: process.env.UNSPLASH_ACCESS_KEY,
     unsplashSecretKey: process.env.UNSPLASH_SECRET_KEY,
@@ -28,5 +33,10 @@ export default defineNuxtConfig({
       unsplashBaseUrl: "https://api.unsplash.com/",
     },
   },
+
   debug: true,
+
+  devtools: {
+    enabled: true,
+  },
 });

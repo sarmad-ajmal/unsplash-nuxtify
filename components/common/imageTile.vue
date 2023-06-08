@@ -64,6 +64,9 @@ const props = defineProps<{
   </div>
 </template>
 <style scoped>
+.image-tile {
+  cursor: zoom-in;
+}
 .image-tile img {
   width: 100%;
   height: auto;
@@ -73,7 +76,6 @@ const props = defineProps<{
   width: 100%;
   height: auto;
   display: block;
-  cursor: zoom-in;
 }
 .image-tile:hover .hover-content {
   display: flex;
