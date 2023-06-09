@@ -126,4 +126,14 @@ onMounted(() => {
 .unsplash-masonry {
   column-count: 3;
 }
+@media (max-width: 900px) {
+  .unsplash-masonry {
+    column-count: 2;
+  }
+}
+@media (max-width: 600px) {
+  .unsplash-masonry {
+    column-count: 1;
+  }
+}
 </style>
