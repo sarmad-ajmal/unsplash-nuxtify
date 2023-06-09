@@ -9,9 +9,16 @@ const props = defineProps<{
 }>();
 </script>
 <template>
-  <div class="image-tile position-relative">
+  <div
+    class="image-tile position-relative"
+    @click="
+      () => {
+        $emit('showDialog', imageUrl);
+      }
+    "
+  >
     <v-hover v-slot="{ isHovering, props: hoverProps }">
-      <img :src="imageUrl" style="" alt="" v-bind="hoverProps" />
+      <img :src="imageUrl" alt="" v-bind="hoverProps" />
       <div
         class="hover-content position-absolute h-100 w-100 flex-column justify-space-between"
       >
