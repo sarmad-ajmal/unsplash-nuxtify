@@ -27,9 +27,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    unsplashAccessKey: process.env.UNSPLASH_ACCESS_KEY,
-    unsplashSecretKey: process.env.UNSPLASH_SECRET_KEY,
     public: {
+      unsplashAccessKey: process.env.UNSPLASH_ACCESS_KEY,
       unsplashBaseUrl: "https://api.unsplash.com/",
     },
   },

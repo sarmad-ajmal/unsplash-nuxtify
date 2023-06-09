@@ -27,9 +27,7 @@ const categoriesTabs = [
   { id: "food-drink", name: "Food & Drinks", href: "/t/food-drink" },
 ];
 const config = useRuntimeConfig();
-const { unsplashAccessKey = "4SboObFgLiPLIhCr9dRkYA7FRmDicJbQhi6imu6LnbU" } =
-  config || {};
-const { unsplashBaseUrl = "" } = config.public || {};
+const { unsplashBaseUrl = "", unsplashAccessKey = "" } = config.public || {};
 const headerPhoto = ref("");
 const userName = ref("");
 const userProfileLink = ref("");

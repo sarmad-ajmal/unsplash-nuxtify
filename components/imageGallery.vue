@@ -14,9 +14,7 @@ const currentPageHeight = ref(300);
 const dialog = ref(false);
 const selectedPhotoURL = ref(null);
 
-const { unsplashAccessKey = "4SboObFgLiPLIhCr9dRkYA7FRmDicJbQhi6imu6LnbU" } =
-  config || {};
-const { unsplashBaseUrl = "" } = config.public || {};
+const { unsplashBaseUrl = "", unsplashAccessKey = "" } = config.public || {};
 
 const computedUrl = computed(() => {
   const params = queryString.stringify({
@@ -57,7 +55,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-btn @click="dialog = !dialog">Show {{ dialog }}</v-btn>
   <div class="unsplash-masonry mt-13 px-16">
     <client-only>
       <template v-for="image in photos" :key="image.id">
