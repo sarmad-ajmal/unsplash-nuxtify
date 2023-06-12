@@ -12,9 +12,14 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   pages: true,
 
-  css: ["vuetify/lib/styles/main.sass", "/assets/main.scss"],
+  css: [
+    "vuetify/lib/styles/main.sass",
+    "/assets/main.scss",
+    "/assets/overrides.scss",
+  ],
 
   build: {
     transpile: ["vuetify"],
@@ -38,4 +43,5 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+
 });
