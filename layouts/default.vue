@@ -1,4 +1,7 @@
 <script setup>
+import { useAuthStore } from "~/store/auth";
+import { storeToRefs } from "pinia";
+
 const categoriesTabs = [
   { id: "wallpapers", name: "Wallpapers", href: "/t/wallpapers" },
   { id: "3d-renders", name: "3D Renders", href: "/t/3d-renders" },
@@ -31,6 +34,14 @@ const { unsplashBaseUrl = "", unsplashAccessKey = "" } = config.public || {};
 const headerPhoto = ref("");
 const userName = ref("");
 const userProfileLink = ref("");
+const authStore = useAuthStore();
+const { me } = storeToRefs(authStore);
+const user = {
+  initials: "SA",
+  fullName: "John Doe",
+  email: "john.doe@doe.com",
+  image: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+};
 
 const res = await useFetch(
   `${unsplashBaseUrl}/photos/random?client_id=${unsplashAccessKey}`
@@ -44,7 +55,7 @@ userProfileLink.value = res.data.value?.user?.portfolio_url;
 <template>
   <v-app>
     <v-main>
-      <div class="pt-6 pb-3 pa-8">
+      <v-sheet class="pt-6 pb-3 pa-8 position-sticky top-0" style="z-index: 5">
         <v-row class="align-center">
           <img
             class="mr-4"
@@ -70,16 +81,79 @@ userProfileLink.value = res.data.value?.user?.portfolio_url;
           <v-btn variant="plain" class="text-body-2 mr-3 unsplash-premium-btn">
             Unsplash+
           </v-btn>
-          <v-divider :thickness="3" vertical></v-divider>
-          <v-btn variant="plain" class="text-body-2 ml-3"> Login </v-btn>
-          <v-btn variant="outlined" size="small" class="text-body-2 text-grey">
+          <v-divider v-if="!me" :thickness="3" vertical></v-divider>
+          <v-btn
+            v-if="!me"
+            variant="plain"
+            class="text-body-2 ml-3"
+            href="/login"
+          >
+            Login
+          </v-btn>
+          <v-btn
+            v-if="!!me"
+            variant="outlined"
+            size="small"
+            class="text-body-2 text-grey"
+          >
             Submit a photo
           </v-btn>
-          <!-- icon button -->
-          <v-btn icon size="xs" variant="plain" class="ml-4">
-            <!-- hamburger icon -->
-            <v-icon>mdi-menu</v-icon>
-          </v-btn>
+          <v-menu width="210px" location="bottom left" offset="10">
+            <template v-slot:activator="{ props }">
+              <v-btn icon v-bind="props" size="" class="ml-5">
+                <v-avatar color="brown" size="small" :image="user.image">
+                  <span class="text-h5">{{ user.initials }}</span>
+                </v-avatar>
+              </v-btn>
+            </template>
+            <v-card>
+              <div class="mx-auto text-left">
+                <v-list density="compact">
+                  <v-list-item>
+                    <v-list-item-title>
+                      <a
+                        href="/profile"
+                        class="text-body-2 text-grey-darken-3 decoration-none pointer-cursor"
+                      >
+                        View profile
+                      </a>
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>
+                      <a
+                        href="/stats"
+                        class="text-body-2 text-grey-darken-3 decoration-none pointer-cursor"
+                      >
+                        Stats
+                      </a>
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>
+                      <a
+                        href="/settings"
+                        class="text-body-2 text-grey-darken-3 decoration-none pointer-cursor"
+                      >
+                        Account Settings
+                      </a>
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-divider class="my-3"></v-divider>
+                  <v-list-item>
+                    <v-list-item-title>
+                      <a
+                        href="/logout"
+                        class="text-body-2 text-grey-darken-3 decoration-none pointer-cursor"
+                      >
+                        Logout
+                      </a>
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </div>
+            </v-card>
+          </v-menu>
         </v-row>
         <v-row class="mt-5 d-flex align-center mb-0">
           <v-btn
@@ -107,7 +181,7 @@ userProfileLink.value = res.data.value?.user?.portfolio_url;
             </template>
           </v-tabs>
         </v-row>
-      </div>
+      </v-sheet>
       <div
         class="unsplash-hero position-relative w-100"
         style="height: calc(100vh - 110px); width: 100vw"

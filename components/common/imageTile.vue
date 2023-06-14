@@ -28,6 +28,7 @@ const props = defineProps<{
             :class="isHovering ? 'primary' : 'grey lighten-2'"
             size="small"
             flat
+            @click.stop=""
           >
             <v-icon>mdi-heart</v-icon>
           </v-btn>
@@ -36,6 +37,7 @@ const props = defineProps<{
             :class="isHovering ? 'primary' : 'grey lighten-2'"
             size="small"
             flat
+            @click.stop=""
           >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
@@ -44,8 +46,13 @@ const props = defineProps<{
           class="bottom-content ml-2 mb-2 d-flex justify-space-between align-center"
         >
           <div class="d-flex align-center">
-            <v-avatar :image="user_picture" size="30" class="pb-0"></v-avatar>
-            <div class="d-flex flex-column ml-2">
+            <v-avatar
+              :image="user_picture"
+              size="30"
+              class="pb-0 cursor-pointer"
+              @click.stop=""
+            ></v-avatar>
+            <div class="d-flex flex-column ml-2 cursor-pointer" @click.stop="">
               <span class="text-body-2 text-white">{{
                 first_name + "" + last_name
               }}</span>
@@ -61,6 +68,7 @@ const props = defineProps<{
               size="small"
               flat
               title="Download"
+              @click.stop=""
             >
               <v-icon> mdi-download </v-icon>
             </v-btn>

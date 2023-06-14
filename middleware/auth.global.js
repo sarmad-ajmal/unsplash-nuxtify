@@ -8,7 +8,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const authStore = useAuthStore();
   const { me } = storeToRefs(authStore);
 
-  console.log({ to, from, me: me.value });
   if (to.path !== "/") {
   }
 });
