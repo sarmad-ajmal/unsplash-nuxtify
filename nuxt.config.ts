@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -45,3 +46,14 @@ export default defineNuxtConfig({
   },
   modules: ["@pinia/nuxt"],
 });
+// add "nuxt-logrocket" to modules
+/* 
+  add logRocket configs when logrocket module is production ready
+  logRocket: {
+    id: process.env.LOGROCKET_ID,
+    dev: true,
+    config: {
+      //
+    },
+  },
+*/
